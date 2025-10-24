@@ -19,6 +19,7 @@ This service acts as a backend for K-Pop music assistants, supporting three core
 2. **Knowledge Base Retrieval**: Fetch structured K-Pop data (e.g., artist relationships, top tracks) from Neo4j when triggered.
 3. **Real-Time Search**: Call SerpAPI to get up-to-date K-Pop information (e.g., latest album releases, concert news).
 
+![kpop](./img/kpop_rec.png)
 
 
 ## Core Features
