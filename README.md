@@ -19,8 +19,16 @@ This service acts as a backend for K-Pop music assistants, supporting three core
 2. **Knowledge Base Retrieval**: Fetch structured K-Pop data (e.g., artist relationships, top tracks) from Neo4j when triggered.
 3. **Real-Time Search**: Call SerpAPI to get up-to-date K-Pop information (e.g., latest album releases, concert news).
 
-![kpop](./img/kpop_rec.png)
+## SECTION 3 : CREDITS / PROJECT CONTRIBUTION
 
+| Official Full Name | Student ID (MTech Applicable)  | Work Items (Who Did What)                                                            | Email (Optional) |
+|:-------------------|:---------------:|:-------------------------------------------------------------------------------------| :-----|
+| Feng Weiyan        | E1553299 | Qwen Agent reasoning CoT / Networked retrieval / Singers&Songs remmendation pipeline | E1553299@nus.edu.sg |
+| Lan Di             | E1554114 | Front end develop                                                                    | E1554114@gmail.com |
+| Fang Zhimou        | E1221777 | Neo4j Knowledge base develop                                                         | E1221777@outlook.com |
+
+## Youtube Use Case Demo
+[![use case](./img/kpop_rec.png)](https://youtu.be/9lUvMDq9H40)
 
 ## Core Features
 | Feature                 | Description                                                                                                                        | Trigger Condition |
