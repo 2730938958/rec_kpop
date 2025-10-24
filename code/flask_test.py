@@ -153,7 +153,7 @@ def build_prompt_with_neo4j(user_prompt: str, neo4j_data: list[dict], singer) ->
     # 组装含知识库的Prompt
     print(neo4j_info)
     full_prompt = f"""
-    你是专业的K-Pop音乐助手，用户想让你推荐几个kpop歌手，你需基于以下【知识库歌手信息】进行推荐，要求回答自然：
+    你是专业的K-Pop音乐助手，用户想让你推荐几个kpop歌手，你需基于以下【知识库歌手信息】进行推荐，要求回答自然，用英语回答：
     
     【知识库歌手信息】
     {neo4j_info}
@@ -172,7 +172,7 @@ async def generate_response(request: LLMRequest):
         final_prompt = user_prompt  # 最终传入LLM的Prompt（默认用户原始输入）
 
         # ---------------------- 关键判断：用户输入是否含“知识库” ----------------------
-        if "知识库" in user_prompt:
+        if "knowledge base" in user_prompt:
             print("🔍 检测到用户输入含“知识库”，调用Neo4j检索")
             singer = detect_singer(user_prompt, singer_list)
 
@@ -186,14 +186,14 @@ async def generate_response(request: LLMRequest):
             else:
                 final_prompt = f"{user_prompt}\n（注：知识库暂未获取到相关数据，将基于默认知识回答）"
 
-        elif "联网" in user_prompt:
+        elif "search" in user_prompt or "internet" in user_prompt:
             search = SerpAPIWrapper()
             # 运行搜索查询
             result = search.run(user_prompt)
             final_prompt = f"用户现在有以下联网搜索要求[{user_prompt}]\n以下是联网搜索到的内容：{result},请直接生成一段给用户的答案"
 
         else:
-            print("ℹ️ 未检测到“知识库”，直接使用LLM默认回答")
+            print("直接使用LLM默认回答ing")
 
         # ---------------------- 构建对话模板并调用LLM ----------------------
         # 生成符合Qwen格式的对话消息
