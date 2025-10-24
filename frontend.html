@@ -271,7 +271,7 @@
                     <!-- 播放列表3 -->
                     <div class="rounded-xl overflow-hidden bg-dark/60 backdrop-blur-sm border border-primary/10 hover:border-primary/40 transition-all duration-300 group cursor-pointer">
                         <div class="relative">
-                            <img src="https://picsum.photos/seed/kplaylist3/400/200" alt="男团热门歌曲" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="https://picsum.photos/seed/kplaylist3/400/200" alt="popular boy group songs" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
                             <button class="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-glow opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
                                 <i class="fa fa-play text-white"></i>
@@ -464,10 +464,10 @@
                     let aiResponse;
                     let recommendations = '';
                     const userMsgLower = userMessage.toLowerCase();
-                    const hasGidleAndVideo = userMsgLower.includes('gidle') && userMsgLower.includes('视频');
+                    const hasGidleAndVideo = userMsgLower.includes('gidle') && userMsgLower.includes('video');
                     // 简单的关键词匹配来生成不同的回复
-                    if (userMsgLower.includes('男团') || userMsgLower.includes('boy group')) {
-                        aiResponse = "以下是一些近期热门的男团歌曲推荐：";
+                    if (userMsgLower.includes('boy group') || userMsgLower.includes('boy group')) {
+                        aiResponse = "Recommend these popular boy group songs for you：";
                         recommendations = `
                             <div class="space-y-4 mt-4">
                                 <div class="bg-dark/60 backdrop-blur-sm rounded-xl p-3 border border-primary/10 hover:border-primary/40 transition-all duration-300 hover:shadow-glow/30 flex items-center gap-3 transform hover:-translate-y-1">
@@ -527,7 +527,7 @@
                         <div class="bg-neutral-dark/70 backdrop-blur-sm rounded-2xl rounded-tl-none px-5 py-4 max-w-[80%] border border-primary/20">
                             <p class="mb-4">${aiResponse}</p>
                             ${recommendations}
-                            <p class="mt-4 text-light/70">还需要其他K-Pop音乐推荐吗？</p>
+                            <p class="mt-4 text-light/70">Need any other kpop recommendation？</p>
                         </div>
                     `;
                     chatMessages.appendChild(aiMessageDiv);
@@ -537,8 +537,8 @@
                         aiMessageDiv.classList.add('animate-fade-in');
                         aiMessageDiv.classList.remove('opacity-0');
                     }, 10);
-                    } else if (userMsgLower.includes('女团') || userMsgLower.includes('girl group')) {
-                        aiResponse = "为你推荐这些热门女团歌曲：";
+                    } else if (userMsgLower.includes('girl group') || userMsgLower.includes('girl group')) {
+                        aiResponse = "Recommend these popular girl group songs for you:";
                         recommendations = `
                             <div class="space-y-4 mt-4">
                                 <div class="bg-dark/60 backdrop-blur-sm rounded-xl p-3 border border-primary/10 hover:border-primary/40 transition-all duration-300 hover:shadow-glow/30 flex items-center gap-3 transform hover:-translate-y-1">
@@ -584,7 +584,7 @@
                         <div class="bg-neutral-dark/70 backdrop-blur-sm rounded-2xl rounded-tl-none px-5 py-4 max-w-[80%] border border-primary/20">
                             <p class="mb-4">${aiResponse}</p>
                             ${recommendations}
-                            <p class="mt-4 text-light/70">还需要其他K-Pop音乐推荐吗？</p>
+                            <p class="mt-4 text-light/70">Need any other kpop music？</p>
                         </div>
                     `;
                     chatMessages.appendChild(aiMessageDiv);
@@ -596,43 +596,56 @@
                     }, 10);
                     }
                     else if (hasGidleAndVideo) {
-        // 处理包含gidle和视频的请求
+    // 处理包含gidle和视频的请求
+    setTimeout(() => {
+        loadingDiv.remove();
+
+        // 1. 定义视频目录和文件列表（根据实际情况修改）
+        const videoDir = './video/gidle'; // 视频存放目录
+        const videoFiles = [
+            'fate.mp4',
+            'gidle2.mp4',
+            'gidle-performance.mp4',
+            'gidle-stage.mp4' // 可添加更多视频文件名
+        ];
+
+        // 2. 随机选择一个视频
+        const randomVideo = videoFiles[Math.floor(Math.random() * videoFiles.length)];
+        const videoUrl = `${videoDir}${randomVideo}`; // 拼接完整路径
+
+        let aiResponse = "为你找到(G)I-DLE的相关视频：";
+        // 3. 视频播放组件 - 使用随机选中的视频路径
+        let videoContent = `
+            <div class="mt-4 mb-3">
+                <video controls class="w-full rounded-lg border border-primary/30" poster="https://picsum.photos/seed/gidle/800/450">
+                    <source src="${videoUrl}" type="video/mp4">
+                    你的浏览器不支持视频播放
+                 </video>
+            </div>
+        `;
+
+        // 创建AI回复元素（保持不变）
+        const aiMessageDiv = document.createElement('div');
+        aiMessageDiv.className = 'flex items-start space-x-3 opacity-0';
+        aiMessageDiv.innerHTML = `
+            <div class="w-9 h-9 rounded-full bg-gradient-to-r from-primary to-secondary flex-shrink-0 flex items-center justify-center shadow-glow">
+                <i class="fa fa-music text-white"></i>
+            </div>
+            <div class="bg-neutral-dark/70 backdrop-blur-sm rounded-2xl rounded-tl-none px-5 py-4 max-w-[80%] border border-primary/20">
+                <p class="mb-4">${aiResponse}</p>
+                ${videoContent}
+                <p class="mt-2 text-light/70">Need any other video recommendation?</p>
+            </div>
+        `;
+        chatMessages.appendChild(aiMessageDiv);
+
         setTimeout(() => {
-            loadingDiv.remove();
-
-            let aiResponse = "为你找到(G)I-DLE的相关视频：";
-            // 视频播放组件 - 注意：本地视频需放在正确路径或通过服务器访问
-            let videoContent = `
-                <div class="mt-4 mb-3">
-                    <video controls class="w-full rounded-lg border border-primary/30" poster="https://picsum.photos/seed/gidle/800/450">
-                        <source src="fate.mp4" type="video/mp4">
-                        你的浏览器不支持视频播放
-                    </audio>
-                </div>
-            `;
-
-            // 创建AI回复元素
-            const aiMessageDiv = document.createElement('div');
-            aiMessageDiv.className = 'flex items-start space-x-3 opacity-0';
-            aiMessageDiv.innerHTML = `
-                <div class="w-9 h-9 rounded-full bg-gradient-to-r from-primary to-secondary flex-shrink-0 flex items-center justify-center shadow-glow">
-                    <i class="fa fa-music text-white"></i>
-                </div>
-                <div class="bg-neutral-dark/70 backdrop-blur-sm rounded-2xl rounded-tl-none px-5 py-4 max-w-[80%] border border-primary/20">
-                    <p class="mb-4">${aiResponse}</p>
-                    ${videoContent}
-                    <p class="mt-2 text-light/70">还需要其他(G)I-DLE的视频吗？</p>
-                </div>
-            `;
-            chatMessages.appendChild(aiMessageDiv);
-
-            setTimeout(() => {
-                aiMessageDiv.classList.add('animate-fade-in');
-                aiMessageDiv.classList.remove('opacity-0');
-            }, 10);
-            scrollToBottom();
-        }, 1500);
-    }
+            aiMessageDiv.classList.add('animate-fade-in');
+            aiMessageDiv.classList.remove('opacity-0');
+        }, 10);
+        scrollToBottom();
+    }, 1500);
+}
                     else {
         // 其他情况调用后端LLM服务
         fetch('http://localhost:7899/api/llm', {
@@ -674,7 +687,7 @@
                 <div class="bg-neutral-dark/70 backdrop-blur-sm rounded-2xl rounded-tl-none px-5 py-4 max-w-[80%] border border-primary/20">
                     <p class="mb-4">${aiResponse}</p>
                     ${recommendations}
-                    <p class="mt-4 text-light/70">还需要其他K-Pop推荐吗？</p>
+                    <p class="mt-4 text-light/70">Need any other kpop music？</p>
                 </div>
             `;
             chatMessages.appendChild(aiMessageDiv);
