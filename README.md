@@ -75,8 +75,8 @@ Before starting the service, ensure you have the following:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/qwen-neo4j-kpop-service.git
-cd qwen-neo4j-kpop-service
+git clone https://github.com/2730938958/rec_kpop.git
+cd rec_kpop
 ```
 
 ### 2. Create a Virtual Environment
