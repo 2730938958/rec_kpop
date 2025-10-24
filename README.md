@@ -37,7 +37,7 @@ This service acts as a backend for K-Pop music assistants, supporting three core
 |-----------------|-----------------------------------------------|---------------------------------------|
 | Web Framework   | FastAPI                                       | >=0.100.0                             |
 | LLM             | Hugging Face Transformers, Qwen2.5-7B-Instruct | Transformers >=4.35.0                 |
-| Agent Framework | Langchain (with TavilySearchResults)          |                                       |
+| Agent Framework | Langchain (with TavilySearchResults)          | >=0.3                                 |
 | Quantization    | BitsAndBytes                                  | >=0.41.1                              |
 | Database        | Neo4j                                         | >=5.0 (with AuraDB support)           |
 | Search          | SerpAPI                                       | SerpAPI Python Wrapper >=0.1.16       |
