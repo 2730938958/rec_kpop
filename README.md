@@ -5,11 +5,14 @@ A FastAPI-based backend service that combines **Qwen2.5-7B-Instruct LLM** (for n
 
 ## Table of Contents
 - [Project Overview](#project-overview)
+- [PROJECT CONTRIBUTION](#project-contribution)
+- [Youtube Use Case Demo](#youtube-use-case-demo)
 - [Core Features](#core-features)
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Installation & Setup](#installation--setup)
 - [Usage Guide](#usage-guide)
+- [Example requests](#example-requests)
 
 
 
@@ -19,7 +22,7 @@ This service acts as a backend for K-Pop music assistants, supporting three core
 2. **Knowledge Base Retrieval**: Fetch structured K-Pop data (e.g., artist relationships, top tracks) from Neo4j when triggered.
 3. **Real-Time Search**: Call SerpAPI to get up-to-date K-Pop information (e.g., latest album releases, concert news).
 
-## SECTION 3 : CREDITS / PROJECT CONTRIBUTION
+## PROJECT CONTRIBUTION
 
 | Official Full Name | Student ID (MTech Applicable)  | Work Items (Who Did What)                                                            | Email (Optional) |
 |:-------------------|:---------------:|:-------------------------------------------------------------------------------------| :-----|
@@ -104,13 +107,13 @@ uvicorn main:app --host 0.0.0.0 --port 7899 --workers 1 --reload
 double click the html file to start
 ```
 
-## **Example Requests**
+## Example Requests
 
 - "Recommend some groups similar to BTS"
 - "using internet to show some K-Pop songs suitable for dancing"
 - "Do you have any recommendations for lyrical K-Pop ballads?"
 - "Recommend some popular boy group songs"
-- "Show me (G)I-DLE videos"
+- "Show me gidle videos"
 
 
 
