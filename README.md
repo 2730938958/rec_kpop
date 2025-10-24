@@ -19,7 +19,6 @@ This service acts as a backend for K-Pop music assistants, supporting three core
 2. **Knowledge Base Retrieval**: Fetch structured K-Pop data (e.g., artist relationships, top tracks) from Neo4j when triggered.
 3. **Real-Time Search**: Call SerpAPI to get up-to-date K-Pop information (e.g., latest album releases, concert news).
 
-The service exposes a RESTful API for frontend integration and supports CORS for cross-domain access.
 
 
 ## Core Features
@@ -29,7 +28,6 @@ The service exposes a RESTful API for frontend integration and supports CORS for
 | Neo4j Knowledge Base | Retrieve structured data (artist names, top tracks, album links) and inject it into the LLM prompt for accurate recommendations. | User input contains "knowledge base". |
 | SerpAPI Internet Search | Fetch real-time data (e.g., "latest BTS album 2024") via SerpAPI and generate answers based on search results. | User input contains "search" or "internet". |
 | Singer Detection | Automatically identify K-Pop singer names from user input to target Neo4j queries (e.g., "Tell me about ITZY from knowledge base"). | Triggered with "knowledge base" keyword. |
-| CORS Support | Allow cross-origin requests from frontends (configurable for production). | Enabled by default for all origins (dev-only). |
 
 
 ## Tech Stack
@@ -95,6 +93,13 @@ uvicorn main:app --host 0.0.0.0 --port 7899 --workers 1 --reload
 double click the html file to start
 ```
 
+## **Example Requests**
+
+- "Recommend some groups similar to BTS"
+- "using internet to show some K-Pop songs suitable for dancing"
+- "Do you have any recommendations for lyrical K-Pop ballads?"
+- "Recommend some popular boy group songs"
+- "Show me (G)I-DLE videos"
 
 
 
