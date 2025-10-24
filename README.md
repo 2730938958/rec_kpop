@@ -24,11 +24,11 @@ This service acts as a backend for K-Pop music assistants, supporting three core
 
 ## PROJECT CONTRIBUTION
 
-| Official Full Name | Student ID (MTech Applicable)  | Work Items (Who Did What)                                                            | Email (Optional) |
-|:-------------------|:---------------:|:-------------------------------------------------------------------------------------| :-----|
-| Feng Weiyan        | E1553299 | Qwen Agent reasoning CoT / Networked retrieval / Singers&Songs remmendation pipeline | E1553299@nus.edu.sg |
-| Lan Di             | E1554114 | Front end develop                                                                    | E1554114@gmail.com |
-| Fang Zhimou        | E1221777 | Neo4j Knowledge base develop                                                         | E1221777@outlook.com |
+| Official Full Name | Student ID (MTech Applicable)  | Work Items                                                                           | Email               |
+|:-------------------|:---------------:|:-------------------------------------------------------------------------------------|:--------------------|
+| Feng Weiyan        | E1553299 | Qwen Agent reasoning CoT / Networked retrieval / Singers&Songs remmendation pipeline | e1553299@u.nus.edu  |
+| Lan Di             | E1554114 | Front end develop                                                                    | e1554114@u.nus.edu  |
+| Fang Zhimou        | E1221777 | Neo4j Knowledge base develop                                                         | e1221777@u.nus.edu  |
 
 ## Youtube Use Case Demo
 [![use case](./img/kpop_rec.png)](https://youtu.be/9lUvMDq9H40)
