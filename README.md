@@ -23,25 +23,27 @@ This service acts as a backend for K-Pop music assistants, supporting three core
 
 
 ## Core Features
-| Feature | Description | Trigger Condition |
-|---------|-------------|-------------------|
-| Basic LLM Response | Answer general K-Pop questions (e.g., "What is K-Pop?") using the pre-trained Qwen model. | No special keywords required. |
-| Neo4j Knowledge Base | Retrieve structured data (artist names, top tracks, album links) and inject it into the LLM prompt for accurate recommendations. | User input contains "knowledge base". |
-| SerpAPI Internet Search | Fetch real-time data (e.g., "latest BTS album 2024") via SerpAPI and generate answers based on search results. | User input contains "search" or "internet". |
-| Singer Detection | Automatically identify K-Pop singer names from user input to target Neo4j queries (e.g., "Tell me about ITZY from knowledge base"). | Triggered with "knowledge base" keyword. |
+| Feature                 | Description                                                                                                                        | Trigger Condition |
+|-------------------------|------------------------------------------------------------------------------------------------------------------------------------|-------------------|
+| Basic LLM Response      | Answer general K-Pop questions (e.g., "What is K-Pop?") using the pre-trained Qwen model.                                          | No special keywords required. |
+| Agent CoT / memory      | Answer complex question requires reasoning like 1. Who is ILLIT? 2. Who is the 막내 of them?                                         | No special keywords required. |
+| Neo4j Knowledge Base    | Retrieve structured data (artist names, top tracks, album links) and inject it into the LLM prompt for accurate recommendations.   | User input contains "knowledge base". |
+| SerpAPI Internet Search | Fetch real-time data (e.g., "latest BTS album 2024") via SerpAPI and generate answers based on search results.                     | User input contains "search" or "internet". |
+| Singer Detection        | Automatically identify K-Pop singer names from user input to target Neo4j queries (e.g., "Tell me about ITZY from knowledge base"). | Triggered with "knowledge base" keyword. |
 
 
 ## Tech Stack
-| Category | Tools/Libraries | Version Requirement |
-|----------|-----------------|---------------------|
-| Web Framework | FastAPI | >=0.100.0 |
-| LLM | Hugging Face Transformers, Qwen2.5-7B-Instruct | Transformers >=4.35.0 |
-| Quantization | BitsAndBytes | >=0.41.1 |
-| Database | Neo4j | >=5.0 (with AuraDB support) |
-| Search | SerpAPI | SerpAPI Python Wrapper >=0.1.16 |
-| Type Hints | Pydantic | >=2.0 |
-| Server | Uvicorn | >=0.23.2 |
-| Dependencies | PyTorch | >=2.0 (with CUDA support recommended) |
+| Category        | Tools/Libraries                               | Version Requirement                   |
+|-----------------|-----------------------------------------------|---------------------------------------|
+| Web Framework   | FastAPI                                       | >=0.100.0                             |
+| LLM             | Hugging Face Transformers, Qwen2.5-7B-Instruct | Transformers >=4.35.0                 |
+| Agent Framework | Langchain (with TavilySearchResults)          |                                       |
+| Quantization    | BitsAndBytes                                  | >=0.41.1                              |
+| Database        | Neo4j                                         | >=5.0 (with AuraDB support)           |
+| Search          | SerpAPI                                       | SerpAPI Python Wrapper >=0.1.16       |
+| Type Hints      | Pydantic                                      | >=2.0                                 |
+| Server          | Uvicorn                                       | >=0.23.2                              |
+| Dependencies    | PyTorch                                       | >=2.0 (with CUDA support recommended) |
 
 
 ## Prerequisites

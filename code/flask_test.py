@@ -8,6 +8,79 @@ import asyncio
 from langchain_community.utilities import SerpAPIWrapper
 import os
 os.environ['SERPAPI_API_KEY'] = '5f637d55472a8b1a905c0648dd0b79637288ca2e28c5a35bd248c38b7d921ceb'
+from transformers import GenerationConfig
+# 在 flask_test.py 中添加以下代码（可放在模型加载部分之后）
+
+# 导入必要的 LangChain 组件
+from langchain.tools import Tool
+from langchain.agents import AgentExecutor, create_react_agent
+from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain.memory import ConversationBufferMemory
+from langchain import PromptTemplate
+import datetime
+
+# 从 langchain_qwen_agent_test.py 导入 Qwen25LLM 类
+from langchain_qwen_agent_test import Qwen25LLM
+
+# 初始化 LangChain 工具
+def get_current_time(*args, **kwargs) -> str:
+    """获取当前系统时间"""
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return f"current time: {current_time}"
+
+time_tool = Tool(
+    name="GetCurrentTime",
+    func=get_current_time,
+    description="获取当前系统时间，格式为YYYY-MM-DD HH:MM:SS，调用时Action Input应为空"
+)
+
+# 初始化搜索工具和LLM
+tavily_search = TavilySearchResults(max_results=2)
+
+
+# 定义Agent提示模板
+agent_prompt_template = """
+the history conversation:
+
+{chat_history}
+
+Answer the following questions as best you can. You have access to the following tools:
+
+{tools}
+
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+Note: If sufficient information has not been obtained after three tool calls, please provide the best answer directly based on the available information.
+Begin!
+
+Question: {input}
+Thought:{agent_scratchpad}
+"""
+
+# 创建提示模板
+agent_prompt = PromptTemplate(
+    input_variables=["chat_history", "tools", "tool_names", "input", "agent_scratchpad"],
+    template=agent_prompt_template
+)
+
+# 初始化对话记忆（使用全局记忆存储对话历史）
+agent_memory = ConversationBufferMemory(
+    memory_key="chat_history",
+    return_messages=True
+)
+
+# 定义工具列表
+tools = [tavily_search, time_tool]
+
 # ---------------------- 1. 初始化FastAPI和CORS配置 ----------------------
 app = FastAPI(title="Qwen LLM + Neo4j Service")
 
@@ -115,6 +188,25 @@ model = AutoModelForCausalLM.from_pretrained(
     trust_remote_code=True
 )
 tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+generation_config = GenerationConfig(
+            max_new_tokens=512,
+            do_sample=False,
+            temperature=0.7,
+            top_p=0.95,
+            eos_token_id=151645,
+            pad_token_id=151643
+        )
+langchain_llm = Qwen25LLM(model=model, tokenizer=tokenizer, generation_config=generation_config)  # 实例化Qwen25LLM
+# 创建Agent执行器
+agent_executor = AgentExecutor(
+    agent=create_react_agent(langchain_llm, tools, agent_prompt),
+    tools=tools,
+    verbose=True,
+    handle_parsing_errors=True,
+    memory=agent_memory,
+    max_iterations=3,
+    early_stopping_method="force"
+)
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
 print(f"模型加载完成，使用设备: {model.device}")
@@ -175,12 +267,9 @@ async def generate_response(request: LLMRequest):
         if "knowledge base" in user_prompt:
             print("🔍 检测到用户输入含“知识库”，调用Neo4j检索")
             singer = detect_singer(user_prompt, singer_list)
-
             singer = singer[0] if len(singer) > 0 else "ITZY"
-
-            # 1. 调用Neo4j获取数据（这里默认检索ITZY相关，可根据需求动态调整艺人）
             neo4j_data = retrieve_from_neo4j(artist_name=singer)
-            # 2. 若检索到数据，构建含知识库的Prompt；无数据则用原始Prompt
+
             if neo4j_data:
                 final_prompt = build_prompt_with_neo4j(user_prompt, neo4j_data, singer)
             else:
@@ -188,27 +277,38 @@ async def generate_response(request: LLMRequest):
 
         elif "search" in user_prompt or "internet" in user_prompt:
             search = SerpAPIWrapper()
-            # 运行搜索查询
             result = search.run(user_prompt)
             final_prompt = f"用户现在有以下联网搜索要求[{user_prompt}]\n以下是联网搜索到的内容：{result},请直接生成一段给用户的答案"
 
         else:
-            print("直接使用LLM默认回答ing")
+            print("使用LangChain Agent回答ing")
+            # 调用LangChain Agent处理用户输入
+            loop = asyncio.get_event_loop()
+            # 由于Agent调用是同步的，需要用run_in_executor包装为异步
+            agent_result = await loop.run_in_executor(
+                None,
+                lambda: agent_executor.invoke({"input": user_prompt})
+            )
+            response_text = agent_result["output"]
+            # 直接返回Agent结果，不需要再调用generate_text
+            return {
+                "response": response_text,
+                "recommendations": neo4j_data,
+                "used_knowledge_base": False,
+                "knowledge_base_count": 0
+            }
 
-        # ---------------------- 构建对话模板并调用LLM ----------------------
-        # 生成符合Qwen格式的对话消息
+        # ---------------------- 构建对话模板并调用LLM（原有逻辑，处理知识库和搜索分支） ----------------------
         messages = [
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": final_prompt}
         ]
-        # 应用聊天模板
         text = tokenizer.apply_chat_template(
             messages,
             tokenize=False,
             add_generation_prompt=True
         )
 
-        # 异步调用LLM生成回复
         loop = asyncio.get_event_loop()
         response_text = await loop.run_in_executor(
             None,
@@ -219,12 +319,11 @@ async def generate_response(request: LLMRequest):
         )
         print(f'📝 模型生成的答复：{response_text}')
 
-        # ---------------------- 返回结果（包含是否使用知识库的标识） ----------------------
         return {
             "response": response_text,
-            "recommendations": neo4j_data,  # 前端可直接用Neo4j数据渲染
-            "used_knowledge_base": "知识库" in user_prompt,  # 标识是否使用了知识库
-            "knowledge_base_count": len(neo4j_data)  # 知识库返回的节点数量
+            "recommendations": neo4j_data,
+            "used_knowledge_base": "knowledge base" in user_prompt,
+            "knowledge_base_count": len(neo4j_data)
         }
 
     except Exception as e:
