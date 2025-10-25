@@ -64,16 +64,15 @@
     <div class="fixed inset-0 z-0">
         <!-- 使用YouTube嵌入的KPOP视频作为背景 -->
         <div class="absolute inset-0 w-full h-full overflow-hidden">
-            <img 
-    class="absolute min-w-full min-h-full object-cover opacity-80"
-    src="https://koreanindo.net/wp-content/uploads/2024/01/GIDLE-3.jpeg"
-    alt="(G)I-DLE 相关图片"
-    title="(G)I-DLE 图片"
-    
-    onError="this.src='https://via.placeholder.com/1920x1080?text=图片加载失败，请稍后重试'; this.alt='图片加载失败，请稍后重试'"
-/>
-
-        </div>
+        <video id="bg-video"
+        class="absolute min-w-full min-h-full object-cover opacity-80"
+        controls
+        poster="https://koreanindo.net/wp-content/uploads/2024/01/GIDLE-3.jpeg"
+    >
+        <source id="video-source" src="" type="video/mp4">
+        你的浏览器不支持视频播放
+    </video>
+</div>
         
         <!-- 渐变遮罩，使视频逐渐消失在前景之下 -->
         <div class="absolute inset-0 bg-gradient-overlay z-10"></div>
@@ -145,24 +144,30 @@
                     </div>
                     <div class="bg-neutral-dark/70 backdrop-blur-sm rounded-2xl rounded-tl-none px-5 py-4 max-w-[80%] border border-primary/20">
                         <p class="mb-4">If you are a fan of BLACKPINK, you might also enjoy the following songs by the girl groups:</p>
-                        
+                        <div class="hidden">
+                            <audio id="audio-player" controls>
+                                <source id="audio-source" src="" type="audio/mpeg">
+                                您的浏览器不支持音频播放
+                            </audio>
+                        </div>
                         <!-- 音乐推荐列表 -->
                         <div class="space-y-4 mt-4">
                             <!-- 音乐卡片1 -->
                             <div class="bg-dark/60 backdrop-blur-sm rounded-xl p-3 border border-primary/10 hover:border-primary/40 transition-all duration-300 hover:shadow-glow/30 flex items-center gap-3 transform hover:-translate-y-1">
                                 <img src="https://picsum.photos/seed/kpop1/80/80" alt="歌曲专辑封面" class="w-14 h-14 rounded-lg object-cover flex-shrink-0 border border-primary/20">
                                 <div class="flex-1 min-w-0">
-                                    <h4 class="font-semibold truncate">DUMDi DUMDi</h4>
-                                    <p class="text-light/60 text-sm truncate">MAMAMOO</p>
+                                    <h4 class="font-semibold truncate">Magnetic</h4>
+                                    <p class="text-light/60 text-sm truncate">ILLIT</p>
                                     <div class="flex items-center mt-1 text-xs text-light/40">
                                         <span class="flex items-center"><i class="fa fa-bolt mr-1"></i> 128 BPM</span>
                                         <span class="mx-2">•</span>
                                         <span>K-Pop, Dance</span>
                                     </div>
                                 </div>
-                                <button class="w-10 h-10 rounded-full bg-primary/20 hover:bg-primary/50 flex items-center justify-center transition-colors duration-200">
-                                    <i class="fa fa-play text-primary"></i>
-                                </button>
+<button class="w-10 h-10 rounded-full bg-primary/20 hover:bg-primary/50 flex items-center justify-center transition-colors duration-200 play-btn"
+        data-src="https://er-sycdn.kuwo.cn/36573312ef7f0b381837f36d711b7a62/68fc9279/resource/30106/trackmedia/M500003TOMkG20xWLM.mp3"> <!-- 替换为实际音频URL -->
+    <i class="fa fa-play text-primary"></i>
+</button>
                             </div>
 
                             <!-- 音乐卡片2 -->
@@ -177,26 +182,28 @@
                                         <span>K-Pop, Hip Hop</span>
                                     </div>
                                 </div>
-                                <button class="w-10 h-10 rounded-full bg-primary/20 hover:bg-primary/50 flex items-center justify-center transition-colors duration-200">
-                                    <i class="fa fa-play text-primary"></i>
-                                </button>
+<button class="w-10 h-10 rounded-full bg-primary/20 hover:bg-primary/50 flex items-center justify-center transition-colors duration-200 play-btn"
+        data-src="https://lw-sycdn.kuwo.cn/0b26e04f972971bff26f5cb8fedeb597/68fc8b8b/resource/30106/trackmedia/M500001fproV1ZD2rw.mp3"> <!-- 替换为实际音频URL -->
+    <i class="fa fa-play text-primary"></i>
+</button>
                             </div>
 
                             <!-- 音乐卡片3 -->
                             <div class="bg-dark/60 backdrop-blur-sm rounded-xl p-3 border border-primary/10 hover:border-primary/40 transition-all duration-300 hover:shadow-glow/30 flex items-center gap-3 transform hover:-translate-y-1">
                                 <img src="https://picsum.photos/seed/kpop3/80/80" alt="歌曲专辑封面" class="w-14 h-14 rounded-lg object-cover flex-shrink-0 border border-primary/20">
                                 <div class="flex-1 min-w-0">
-                                    <h4 class="font-semibold truncate">How You Like That</h4>
-                                    <p class="text-light/60 text-sm truncate">BLACKPINK</p>
+                                    <h4 class="font-semibold truncate">Know About Me</h4>
+                                    <p class="text-light/60 text-sm truncate">NMIXX</p>
                                     <div class="flex items-center mt-1 text-xs text-light/40">
                                         <span class="flex items-center"><i class="fa fa-bolt mr-1"></i> 129 BPM</span>
                                         <span class="mx-2">•</span>
                                         <span>K-Pop, EDM</span>
                                     </div>
                                 </div>
-                                <button class="w-10 h-10 rounded-full bg-primary/20 hover:bg-primary/50 flex items-center justify-center transition-colors duration-200">
-                                    <i class="fa fa-play text-primary"></i>
-                                </button>
+                                    <button class="w-10 h-10 rounded-full bg-primary/20 hover:bg-primary/50 flex items-center justify-center transition-colors duration-200 play-btn"
+                                            data-src="https://er-sycdn.kuwo.cn/9c8c44f66c9f055e9e7dae78464e51e8/68fc9765/resource/30106/trackmedia/M500002JhOoM0MQ1jW.mp3"> <!-- 替换为实际音频URL -->
+                                        <i class="fa fa-play text-primary"></i>
+                                    </button>
                             </div>
                         </div>
 
@@ -239,19 +246,26 @@
                 
                 <div class="flex-1 overflow-y-auto scrollbar-hide p-4 space-y-4">
                     <!-- 播放列表1 -->
-                    <div class="rounded-xl overflow-hidden bg-dark/60 backdrop-blur-sm border border-primary/10 hover:border-primary/40 transition-all duration-300 group cursor-pointer">
-                        <div class="relative">
-                            <img src="https://picsum.photos/seed/kplaylist1/400/200" alt="2023年热门K-Pop" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
-                            <button class="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-glow opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
-                                <i class="fa fa-play text-white"></i>
-                            </button>
-                        </div>
-                        <div class="p-3">
-                            <h3 class="font-semibold">Popular K-Pop in 2023</h3>
-                            <p class="text-light/60 text-sm mt-1">25 Songs • Latest Hits</p>
-                        </div>
-                    </div>
+<div id="popular-2025-playlist" class="rounded-xl overflow-hidden bg-dark/60 backdrop-blur-sm border border-primary/10 hover:border-primary/40 transition-all duration-300 group cursor-pointer"
+
+     data-audio-list='[
+         "https://er-sycdn.kuwo.cn/36573312ef7f0b381837f36d711b7a62/68fc9279/resource/30106/trackmedia/M500003TOMkG20xWLM.mp3",
+         "https://lw-sycdn.kuwo.cn/0b26e04f972971bff26f5cb8fedeb597/68fc8b8b/resource/30106/trackmedia/M500001fproV1ZD2rw.mp3",
+         "https://er-sycdn.kuwo.cn/9c8c44f66c9f055e9e7dae78464e51e8/68fc9765/resource/30106/trackmedia/M500002JhOoM0MQ1jW.mp3"
+     ]'>
+    <div class="relative">
+        <img src="https://picsum.photos/seed/kplaylist1/400/200" alt="2025年热门K-Pop" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+        <!-- 给播放按钮添加类，用于绑定事件 -->
+        <button class="playlist-play-btn absolute bottom-3 right-3 w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-glow opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+            <i class="fa fa-play text-white"></i>
+        </button>
+    </div>
+    <div class="p-3">
+        <h3 class="font-semibold">Popular K-Pop in 2025</h3> <!-- 标题改为2025 -->
+        <p class="text-light/60 text-sm mt-1">25 Songs • Latest Hits</p>
+    </div>
+</div>
 
                     <!-- 播放列表2 -->
                     <div class="rounded-xl overflow-hidden bg-dark/60 backdrop-blur-sm border border-primary/10 hover:border-primary/40 transition-all duration-300 group cursor-pointer">
@@ -604,15 +618,22 @@
         const videoDir = './video/gidle'; // 视频存放目录
         const videoFiles = [
             'fate.mp4',
-            'gidle2.mp4',
-            'gidle-performance.mp4',
-            'gidle-stage.mp4' // 可添加更多视频文件名
+            'queencard.mp4',
+            'nx.mp4',
+            'g1.mp4',
+            'g2.mp4'
         ];
 
         // 2. 随机选择一个视频
         const randomVideo = videoFiles[Math.floor(Math.random() * videoFiles.length)];
-        const videoUrl = `${videoDir}${randomVideo}`; // 拼接完整路径
-
+        const videoUrl = `${videoDir}/${randomVideo}`; // 拼接完整路径
+        const videoSource = document.getElementById('video-source');
+        const bgVideo = document.getElementById('bg-video');
+        // if (videoSource && bgVideo) {
+        //     videoSource.src = videoUrl;
+        //     bgVideo.load(); // 重新加载视频
+        //     bgVideo.play().catch(e => console.log('视频播放失败:', e)); // 尝试播放
+        // }
         let aiResponse = "为你找到(G)I-DLE的相关视频：";
         // 3. 视频播放组件 - 使用随机选中的视频路径
         let videoContent = `
@@ -745,6 +766,41 @@
             `;
             document.head.appendChild(style);
         });
+
+    const audioPlayer = document.getElementById('audio-player');
+    const audioSource = document.getElementById('audio-source');
+    const playButtons = document.querySelectorAll('.play-btn');
+
+    // 为每个播放按钮添加点击事件
+    playButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const audioUrl = this.getAttribute('data-src');
+
+            // 更新音频源并播放
+            if (audioSource.src !== audioUrl) {
+                audioSource.src = audioUrl;
+                audioPlayer.load();
+            }
+
+            // 切换播放/暂停状态
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                this.innerHTML = '<i class="fa fa-pause text-primary"></i>';
+            } else {
+                audioPlayer.pause();
+                this.innerHTML = '<i class="fa fa-play text-primary"></i>';
+            }
+        });
+    });
+
+    // 监听音频结束事件，重置按钮状态
+    audioPlayer.addEventListener('ended', function() {
+        playButtons.forEach(button => {
+            button.innerHTML = '<i class="fa fa-play text-primary"></i>';
+        });
+    });
+
+    
     </script>
 </body>
 </html>
