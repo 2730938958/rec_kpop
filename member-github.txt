@@ -1,0 +1,9 @@
+Kpop Recommendation Assistant
+
+Member:
+Feng Weiyan E1553299 e1553299@u.nus.edu
+Lan Di E1554114 e1554114@u.nus.edu
+Fang Zhimou E1221777 e1221777@u.nus.edu
+
+Web link:
+https://github.com/2730938958/rec_kpop
