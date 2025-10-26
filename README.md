@@ -26,9 +26,9 @@ This service acts as a backend for K-Pop music assistants, supporting three core
 
 | Official Full Name | Student ID (MTech Applicable)  | Work Items                                                                           | Email               |
 |:-------------------|:---------------:|:-------------------------------------------------------------------------------------|:--------------------|
-| Feng Weiyan        | E1553299 | Qwen Agent reasoning CoT / Networked retrieval / Singers&Songs remmendation pipeline | e1553299@u.nus.edu  |
-| Lan Di             | E1554114 | Front end develop                                                                    | e1554114@u.nus.edu  |
-| Fang Zhimou        | E1221777 | Neo4j Knowledge base develop                                                         | e1221777@u.nus.edu  |
+| Feng Weiyan        | A0328972N | Qwen Agent reasoning CoT / Networked retrieval / Singers&Songs remmendation pipeline | e1553299@u.nus.edu  |
+| Lan Di             | A0329787E | Front end develop                                                                    | e1554114@u.nus.edu  |
+| Fang Zhimou        | A0285965H | Neo4j Knowledge base develop                                                         | e1221777@u.nus.edu  |
 
 ## Youtube Use Case Demo
 [![use case](./img/kpop_rec.png)](https://youtu.be/9lUvMDq9H40)
